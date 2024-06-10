@@ -1,6 +1,7 @@
 //https://leetcode.com/problems/merge-strings-alternately
 
 
+
 class Solution {
     fun mergeAlternately(word1: String, word2: String): String {
         val sb = StringBuilder()
