@@ -1,0 +1,29 @@
+
+
+------Time complexity 
+-- big-o-cheatsheet.pdf
+Constant time - O(1)
+Linear Time - O(n)
+Quadratic time - O(n^2)
+Logarithmic time -  O(log n)
+	log base 2 applies. However, since Big O notation only concerns
+    itself with the shape of the performance, the actual base doesn’t matter.
+    Base 2 logarithms are frequently used in computer science due to the binary nature
+    Example: log₂(8) = 3, because 2^3 = 8.
+Quasilinear time - O(n log n)
+	worse than linear time but dramatically better than quadratic time
+
+others
+polynomial time, exponential time, factorial time
+
+
+
+-------Collection interfaces
+Four important collection interfaces.
+
+Tier 1, Iterable: An iterable type provides sequential access to its elements via an Iterator .
+Tier 2, Collection: A collection is an iterable that provides additional functionality, allowingyou to check if the collection contains a particular element or a collection of elements.
+Tier 3, MutableIterable: An iterable that provides a MutableIterator , which allows both
+accessing the items and removing them.
+Tier 4, MutableCollection: A collection that also provides methods to alter its contained
+items. For example, you can add and remove elements, and even clear the entire collection.

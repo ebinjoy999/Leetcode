@@ -1,0 +1,19 @@
+
+push : Adding an element to the top of the stack.
+pop : Removing the top element of the stack.
+
+
+override fun push(element: T) {
+    storage.add(element)
+}
+override fun pop(): T? {
+    if (storage.size == 0) {
+        return null
+    }
+    return storage.removeAt(storage.size - 1)
+}
+
+
+
+
+You may have wondered if you could adopt the Kotlin collection interfaces for the stack. A stack’s purpose is to limit the number of ways to access your data, and adopting interfaces such as Iterable would go against this goal by exposing all of the elements via iterators.

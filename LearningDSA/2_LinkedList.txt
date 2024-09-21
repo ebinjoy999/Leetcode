@@ -1,0 +1,308 @@
+Constant time insertion and removal from the front of the list.
+
+
+data class Node<T : Any>(var value: T, var next: Node<T>? = null) {
+	override fun toString(): String {
+		return if (next != null) {
+			"$value -> ${next.toString()}"
+		} else {
+			"$value"
+		}
+	}
+}
+
+----------------------------------- Adding Operation
+
+1. push : Adds a value at the front of the list.
+2. append : Adds a value at the end of the list.
+3. insert : Adds a value after a particular node of the list.
+
+class LinkedList<T : Any> {
+    private var head: Node<T>? = null
+    private var tail: Node<T>? = null
+    private var size = 0
+    fun isEmpty(): Boolean = size == 0
+    override fun toString(): String {
+        if (isEmpty()) {
+            return "Empty list"
+        } else {
+            return head.toString()
+        }
+    }
+
+    fun push(value: T): LinkedList<T> = apply {
+        head = Node(value = value, next = head)
+        if (tail == null) {
+            tail = head
+        }
+        size++
+    }
+
+    fun append(value: T) {
+        if (isEmpty()) {
+            push(value)
+            return
+        }
+        val newNode = Node(value = value)
+        tail!!.next = newNode
+        tail = newNode
+        size++
+    }
+
+    fun insert(value: T, afterNode: Node<T>): Node<T> {
+        if (tail == afterNode) {
+            append(value)
+            return tail!!
+        }
+        val newNode = Node(value = value, next = afterNode.next)
+        afterNode.next = newNode
+        size++
+        return newNode
+    }
+
+    fun nodeAt(index: Int): Node<T>? {
+        var currentNode = head
+        var currentIndex = 0
+        while (currentNode != null && currentIndex < index) {
+            currentNode = currentNode.next
+            currentIndex++
+        }
+        return currentNode
+    }
+}
+
+
+
+
+
+----------------------------------- Removing operations
+
+1. pop : Removes the value at the front of the list.
+2. removeLast : Removes the value at the end of the list.
+3. removeAfter : Removes a value after a particular node of the list.
+
+class LinkedList<T : Any> {
+    private var head: Node<T>? = null
+    private var tail: Node<T>? = null
+    private var size = 0
+    fun isEmpty(): Boolean = size == 0
+
+    fun pop(): T? {
+        if (isEmpty()) return null
+        val result = head?.value
+        head = head?.next
+        size--
+        if (isEmpty()) {
+            tail = null
+        }
+        return result
+    }
+
+    fun removeLast(): T? {
+        val head = head ?: return null
+        if (head.next == null) return pop()
+        size--
+
+        var prev = head
+        var current = head
+        var next = current.next
+        while (next != null) {
+            prev = current
+            current = next
+            next = current.next
+        }
+
+        prev.next = null
+        tail = prev
+        return current.value
+    }
+
+
+    fun removeAfter(node: Node<T>): T? {
+        val result = node.next?.value
+        if (node.next == tail) {
+            tail = node
+        }
+        if (node.next != null) {
+            size--
+        }
+        node.next = node.next?.next
+        return result
+    }
+}
+
+
+-------------------------------Iterable Tier 1-------------------------------
+
+class LinkedList<T : Any> : Iterable<T> {
+    override fun iterator(): Iterator<T> {
+        return LinkedListIterator(this)
+    }
+}
+
+class LinkedListIterator<T: Any>(
+    private val list: LinkedList<T>
+) : Iterator<T> {
+    private var index = 0
+    private var lastNode: Node<T>? = null
+
+    override fun hasNext(): Boolean {
+        return index < list.size
+    }
+
+    override fun next(): T {
+        if (index >= list.size) throw IndexOutOfBoundsException()
+        lastNode = if (index == 0) {
+            list.nodeAt(0)
+        } else {
+            lastNode?.next
+        }
+        index++
+        return lastNode!!.value
+    }
+}
+
+Now can access - 
+for (item in list) {
+println("Double: ${item * 2}")
+}
+
+
+
+-------------------------------Iterable, Collection Tier 2
+
+class LinkedList<T : Any> : Iterable<T>, Collection<T> {
+    override val size: Int = 0
+
+    override fun contains(element: T): Boolean {
+        for (item in this) {
+            if (item == element) return true
+        }
+        return false
+    }
+
+    override fun containsAll(elements: Collection<T>): Boolean {
+        for (searched in elements) {
+            if (!contains(searched)) return false
+        }
+        return true
+    }
+
+    override fun isEmpty(): Boolean {
+        return size == 0
+    }
+
+    override fun iterator(): Iterator<T> {
+        TODO("Not yet implemented")
+    }
+
+}
+
+
+-------------------------------Iterable.. Iterator,MutableIterator Tier 3
+
+class LinkedListIterator<T>(
+    private val list: LinkedList<T>
+) : Iterator<T>, MutableIterator<T> {
+    private var index = 0
+    private var lastNode: Node<T>? = null
+    override fun hasNext(): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun next(): T {
+        TODO("Not yet implemented")
+    }
+
+    override fun remove() {
+        if (index == 1) {
+            list.pop()
+        } else {
+            val prevNode = list.nodeAt(index - 2) ?: return
+            list.removeAfter(prevNode)
+            lastNode = prevNode
+        }
+        index--
+    }
+
+}
+
+
+-------------------------------MutableCollection Tier 4
+
+MutableCollection internally extend following
+public interface MutableCollection<E> : Collection<E>, MutableIterable<E> 
+
+
+
+class LinkedList<T : Any>(override val size: Int) : MutableCollection<T> {
+    override fun contains(element: T): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun add(element: T): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun addAll(elements: Collection<T>): Boolean {
+        for (element in elements) {
+            append(element)
+        }
+        return true
+    }
+
+    override fun clear() {
+        TODO("Not yet implemented")
+    }
+
+    override fun isEmpty(): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun iterator(): MutableIterator<T> {
+        TODO("Not yet implemented")
+    }
+
+    override fun retainAll(elements: Collection<T>): Boolean {
+        var result = false
+        val iterator = this.iterator()
+        while (iterator.hasNext()) {
+            val item = iterator.next()
+            if (!elements.contains(item)) {
+                iterator.remove()
+                result = true
+            }
+        }
+        return result
+    }
+
+    override fun removeAll(elements: Collection<T>): Boolean {
+        var result = false
+        for (item in elements) {
+            result = remove(item) || result
+        }
+        return result
+    }
+
+    override fun remove(element: T): Boolean {
+        val iterator = iterator()
+        while (iterator.hasNext()) {
+            val item = iterator.next()
+            if (item == element) {
+                iterator.remove()
+                return true
+            }
+        }
+        return false
+    }
+
+    override fun containsAll(elements: Collection<T>): Boolean {
+        TODO("Not yet implemented")
+    }
+
+
+}
+
+
+
+
