@@ -11,6 +11,15 @@ data class Node<T : Any>(var value: T, var next: Node<T>? = null) {
 	}
 }
 
+Doubly linked List take 2x memory.
+Reference take 8bit 64arch while 4 in 32arch
+
+| Operation      | Singly Linked | Doubly Linked |
+| Remove at head | O(1)          | O(1) |
+| Remove at tail | O(n)          | O(1) |
+| Remove in middle | O(n)        | O(n) |
+
+
 ----------------------------------- Adding Operation
 
 1. push : Adds a value at the front of the list.
@@ -72,7 +81,15 @@ class LinkedList<T : Any> {
 }
 
 
+class Node<T> {
+    var data: T
+    var previous: Node<T>? = null
+    var next: Node<T>? = null
 
+    constructor(data: T) {
+        this.data = data
+    }
+}
 
 
 ----------------------------------- Removing operations

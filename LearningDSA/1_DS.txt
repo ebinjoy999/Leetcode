@@ -2,6 +2,9 @@
 
 ------Time complexity 
 -- big-o-cheatsheet.pdf
+
+Big O notation give the upper bound worst complexity for the Algo.
+
 Constant time - O(1)
 Linear Time - O(n)
 Quadratic time - O(n^2)
@@ -14,7 +17,30 @@ Quasilinear time - O(n log n)
 	worse than linear time but dramatically better than quadratic time
 
 others
-polynomial time, exponential time, factorial time
+polynomial time, exponential time: O(b^n), factorial time O(n!)
+
+
+
+--------Big-0 Examples
+i=0
+While i < 3 * n Do
+    j = 10
+    While j <= 50 Do
+        j=j+1
+    j=0
+    While j < n*n*n Do
+        j=j+2
+    i=i+1
+
+f(n) = 3n * (40 + n^3/2) = 3n/40 + 3n^4/2
+0(f(n)) = 0(n4) //
+
+
+Finding all subsets of a set - 0(2^n)
+Finding all permutations of a string - O(n!)
+Sorting using mergesort - O(nlog(n))
+Iterating over all the cells in a matrix of size n by m - O(nm)
+
 
 
 

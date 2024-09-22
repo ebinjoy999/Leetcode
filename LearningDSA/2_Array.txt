@@ -1,1 +1,26 @@
-Array.txt
+
+---Complexity Table for Static Array vs Dynamic Array:
+
+Operation	Static Array	Dynamic Array
+Access			O(1)			O(1)
+Search			O(n)			O(n)
+Insertion		N/A				O(n)
+Appending		N/A				O(1)
+Deletion		N/A				O(n)
+
+
+Remove from array
+    public T removeAt(int rm_index) {
+        if (rm_index >= len && rm_index < 0) throw new IndexOutOfBoundsException();
+        T data = arr[rm_index];
+        T[] new_arr = (T[]) new Object[len - 1];
+
+        for (int i = 0, j = 0; i < len; i++, j++)
+            if (i == rm_index) j--; // Skip over rm_index by fixing j temporarily
+            else new_arr[j] = arr[i];
+
+        arr = new_arr;
+        capacity = --len;
+        return data;
+    }
+
