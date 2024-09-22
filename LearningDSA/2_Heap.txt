@@ -1,0 +1,36 @@
+
+
+-------------- Heap
+
+A heap is a complete binary tree data structure also known as a binary heap that you can construct using an array.
+
+1. Maxheap, in which elements with a higher value have a higher priority.
+2. Minheap, in which elements with a lower value have a higher priority.
+
+
+A heap has an important characteristic that must always be satisfied. This is known as the heap invariant or heap property.
+
+-In a maxheap, parent nodes must always contain a value that is greater than or equal to the valuein its children. The root node will always contain the highest value.
+-In a minheap, parent nodes must always contain a value that is less than or equal to the value in its children. The root node will always contain the lowest value.
+
+
+Don’t confuse these heaps with memory heaps. The term heap is sometimes
+confusingly used in computer science to refer to a pool of memory. Memory heaps are a
+different concept and are not what you’re studying here.
+
+
+--Common operations
+interface Collection<T: Any> {
+    val count: Int
+    val isEmpty: Boolean
+        get() = count == 0
+    fun insert(element: T)
+    fun remove(): T?
+    fun remove(index: Int): T?
+}
+
+--Common Applications
+#Calculating the minimum or maximum element of a collection.
+#Heap sort.
+#Implementing a priority queue.
+#Supporting graph algorithms, like Prim’s or Dijkstra’s, with a priority queue.

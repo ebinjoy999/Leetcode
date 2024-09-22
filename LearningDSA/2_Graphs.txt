@@ -1,0 +1,133 @@
+
+
+---Weighted graphs
+weighted graph, every edge has a weight associated with it that represents the cost of using this edge.
+
+   (A)----2----(B)
+    |            |
+    4            3
+    |            |
+   (C)----1----(D)
+
+
+---Directed graphs
+As well as assigning a weight to an edge, your graphs can also have direction. Directed graphs are more restrictive to traverse, as an edge MAY only permit traversal in one direction.   
+
+---Undirected graphs
+You can think of an undirected graph as a directed graph where all of the edges are bi-directional.
+
+
+---Common Operations
+
+interface Graph<T: Any> {
+    fun createVertex(data: T): Vertex<T>
+
+    fun addDirectedEdge(source: Vertex<T>,
+                        destination: Vertex<T>,
+                        weight: Double?)
+
+    fun addUndirectedEdge(source: Vertex<T>,
+                          destination: Vertex<T>,
+                          weight: Double?)
+
+    fun add(edge: EdgeType,
+            source: Vertex<T>,
+            destination: Vertex<T>,
+            weight: Double?)
+
+    fun edges(source: Vertex<T>): ArrayList<Edge<T>>
+
+    fun weight(source: Vertex<T>,
+               destination: Vertex<T>): Double?
+}
+enum class EdgeType {
+    DIRECTED,
+    UNDIRECTED
+}
+data class Vertex<T: Any>(val index: Int, val data: T)
+
+
+
+---Adjacency list
+The first graph implementation that you’ll learn uses an adjacency list. For every vertex in the graph, the graph stores a list of outgoing edges.
+
+class AdjacencyList<T: Any> : Graph<T> {
+	private val adjacencies: HashMap<Vertex<T>, ArrayList<Edge<T>>> = HashMap()
+}
+
+override fun createVertex(data: T): Vertex<T> {
+	val vertex = Vertex(adjacencies.count(), data)
+	adjacencies[vertex] = ArrayList()
+	return vertex
+}
+
+override fun addDirectedEdge(source: Vertex<T>, destination: Vertex<T>, weight: Double?) {
+	val edge = Edge(source, destination, weight)
+	adjacencies[source]?.add(edge)
+}
+
+fun addUndirectedEdge(source: Vertex<T>, destination: Vertex<T>, weight: Double?) {
+	addDirectedEdge(source, destination, weight)
+	addDirectedEdge(destination, source, weight)
+}
+
+fun add(edge: EdgeType, source: Vertex<T>, destination: Vertex<T>, weight: Double?)
+{
+	when (edge) {
+		EdgeType.DIRECTED -> addDirectedEdge(source, destination, weight)
+		EdgeType.UNDIRECTED -> addUndirectedEdge(source, destination, weight)
+	}
+}
+
+Retrive weight
+override fun weight(source: Vertex<T>, destination: Vertex<T>): Double? {
+	return edges(source).firstOrNull { it.destination == destination }?.weight
+}
+
+
+---Adjacency matrix
+An adjacency matrix uses a square matrix to represent a graph. This matrix is a two-dimensional array wherein the value of matrix[row][column] is the weight of the edge between the vertices at row and column.
+
+Vertices:
+0: Singapore
+1: Hong Kong
+2: Tokyo
+3: Washington, DC
+4: San Francisco
+
+Adjacency Matrix (Travel Costs):
+    0     1     2     3     4
+0 [ 0    300   500     0     0 ]
+1 [300     0   250     0     0 ]
+2 [500   250     0   300     0 ]
+3 [  0     0   300     0     0 ]
+4 [  0   600     0     0     0 ]
+
+
+--Imp
+class AdjacencyMatrix<T: Any> : Graph<T> {
+	private val vertices = arrayListOf<Vertex<T>>()
+	private val weights = arrayListOf<ArrayList<Double?>>()
+    ..
+}
+
+
+
+Graph analysis
+
+Operations                  | Adjacency List         | Adjacency Matrix
+---------------------------------------------------------------------
+Storage Space                | O(V + E)               | O(V²)
+---------------------------------------------------------------------
+Add Vertex                   | O(1)                   | O(V²)
+---------------------------------------------------------------------
+Add Edge                     | O(1)                   | O(1)
+---------------------------------------------------------------------
+Finding Edges and Weight      | O(V)                   | O(1)
+
+V represents vertices, and E represents edges.
+
+
+BFS and DFS @ 253 ----------
+
+
