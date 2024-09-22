@@ -3,9 +3,9 @@
 
 
 interface Queue<T : Any> {
-	fun enqueue(element: T): Boolean
+	fun enqueue(element: T): Boolean //insert at back
 
-	fun dequeue(): T?
+	fun dequeue(): T? //removes from front
 	
 	val count: Int
 	get
@@ -15,3 +15,91 @@ interface Queue<T : Any> {
 	
 	fun peek(): T?
 }
+
+
+
+--List-based implementation
+
+class ArrayListQueue<T : Any> : Queue<T> {
+    private val list = arrayListOf<T>()
+    
+    override val count: Int
+        get() = list.size
+    
+    override fun peek(): T? = list.getOrNull(0)
+
+    override fun dequeue(): T? =
+		if (isEmpty) null else list.removeAt(0)
+
+	override fun enqueue(element: T): Boolean {
+		list.add(element)
+		return true
+	}
+}
+
+Time complexity of enqueue is O(1) and dequeue is O(n)
+if you are using linked list then the enque and dequeue time complexity become O(1)
+
+
+--RingBuffer
+A ring buffer, also known as a circular buffer, is a fixed-size array. This data structure strategically
+wraps around to the beginning when there are no more items to remove at the end.
+
+class RingBufferQueue<T : Any>(size: Int) : Queue<T> {
+    private val ringBuffer: RingBuffer<T> = RingBuffer(size)
+
+    override val count: Int
+        get() = ringBuffer.count
+
+    override fun peek(): T? = ringBuffer.first
+
+    override fun enqueue(element: T): Boolean =
+        ringBuffer.write(element)
+
+    override fun dequeue(): T? =
+        if (isEmpty) null else ringBuffer.read()
+}
+
+
+
+--Double-stack implementation
+
+class StackQueue<T : Any> : Queue<T> {
+    private val leftStack = StackImpl<T>()
+    private val rightStack = StackImpl<T>()
+
+    override val isEmpty: Boolean
+        get() = leftStack.isEmpty && rightStack.isEmpty
+    override val count: Int
+        get() = leftStack.count + rightStack.count
+
+    override fun peek(): T? {
+        if (leftStack.isEmpty) {
+            transferElements()
+        }
+        return leftStack.peek()
+    }
+    
+    private fun transferElements() {
+        var nextElement = rightStack.pop()
+        while (nextElement != null) {
+            leftStack.push(nextElement)
+            nextElement = rightStack.pop()
+        }
+    }
+
+    override fun enqueue(element: T): Boolean {
+        rightStack.push(element)
+        return true
+    }
+
+    override fun dequeue(): T? {
+        if (leftStack.isEmpty) { // 1
+            transferElements() // 2
+        }
+        return leftStack.pop() // 3
+    }
+}
+
+
+
