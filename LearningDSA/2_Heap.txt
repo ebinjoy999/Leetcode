@@ -2,17 +2,19 @@
 
 -------------- Heap
 
-A heap is a complete binary tree data structure also known as a binary heap that you can construct using an array.
-
-1. Maxheap, in which elements with a higher value have a higher priority.
-2. Minheap, in which elements with a lower value have a higher priority.
-
-
+A heap is a tree bassed data structure that satisfies the heap invarient. All heap must be a tree no cycle.
 A heap has an important characteristic that must always be satisfied. This is known as the heap invariant or heap property.
-
 -In a maxheap, parent nodes must always contain a value that is greater than or equal to the valuein its children. The root node will always contain the highest value.
 -In a minheap, parent nodes must always contain a value that is less than or equal to the value in its children. The root node will always contain the lowest value.
 
+eg: Valid one 
+        2
+      /   \
+     3     2
+    / \   / \
+   7   7 13  2
+  /
+ 11  
 
 Don’t confuse these heaps with memory heaps. The term heap is sometimes
 confusingly used in computer science to refer to a pool of memory. Memory heaps are a
@@ -25,7 +27,7 @@ interface Collection<T: Any> {
     val isEmpty: Boolean
         get() = count == 0
     fun insert(element: T)
-    fun remove(): T?
+    fun remove(): T?        //poll()
     fun remove(index: Int): T?
 }
 
@@ -34,3 +36,44 @@ interface Collection<T: Any> {
 #Heap sort.
 #Implementing a priority queue.
 #Supporting graph algorithms, like Prim’s or Dijkstra’s, with a priority queue.
+Heapify is a process used to convert a binary tree into a heap data structure. 
+
+
+Binary Heap
+Fibanocci heap
+Binominal Heap
+Pairing heap
+
+
+Binary Heap representation using Array
+The heap's value array is   [9, 8, 7, 6, 5, 1, 2, ,2, 2, 3, 4, 0, 1, 2, 1].
+The index array below it is [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].
+ 
+           9                
+        /     \
+       8       7
+      / \     / \
+     6   5    1  2
+    / \ / \  / \ /\
+   2  2 3 4  0 1 2 1
+   
+Index Tree
+           0
+        /     \
+      1         2
+    /  \       /  \
+   3   4      5    6
+  / \ / \    / \   /\
+ 7  8 9 10  11 12 13 14
+
+Let i be the parent
+node index
+Left child index: 2i + 1
+Right child index: 2i + 2
+
+Swim Operation: Moves an element up the priority queue to its correct position when its priority increases
+Sink Operation: Moves an element down the priority queue to its correct position when its priority decreases.
+Bubble: After insert we need to do Bubling up/down(if there is a tie select left) to make order correct.
+
+Polling - 0(log(n))
+Removing - 0(n)    -> HashTable then O(log(n))

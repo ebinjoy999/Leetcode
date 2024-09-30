@@ -6,13 +6,14 @@ Max-priority: The element at the front is always the largest.
 Min-priority: The element at the front is always the smallest.
 
 Applications
-Dijkstra’s algorithm, A* pathfinding algorithm, Heap sort, Huffman coding...
+Dijkstra’s algorithm, shortest pathfinding algorithm, Heap sort, Huffman coding...
+Minimum Spanning tree
 
 
 Common operations
 interface Queue<T: Any> {
-    fun enqueue(element: T): Boolean
-    fun dequeue(): T?
+    fun enqueue(element: T): Boolean //add
+    fun dequeue(): T?                //poll   
     val count: Int
         get
     val isEmpty: Boolean
@@ -40,7 +41,7 @@ abstract class AbstractPriorityQueue<T: Any> : Queue<T> {
     // 2
     abstract val heap: Heap<T>
         get
-// more to come ...
+    // more to come ...
 }
 
 
@@ -78,3 +79,25 @@ The overall complexity of enqueue() is the same as insert() : O(log n).
 3
 1
 1
+
+------ Convert min heap to max heap
+Suppose lex is a comparator for strings which sorts strings in lexicographic order (the default
+in most programming languages). Then let nlex be the negation of lex, and also let s1, s2 be strings
+lex(s1, s2) = -1 if s1 < s2 lexicographically
+lex(s1, s2) = 0 if s1 = s2 lexicographically
+lex(s1, s2) = +1 if s1 > s2 lexicographically
+
+
+
+Complexity of PQ with binary heap
+Construction: O(n)
+Polling:      O(log(n))
+Peeking:      O(1)
+Adding:       O(log(n))
+Naive Removing(Not from root)       O(n)
+Advanced Removing (with hash table) O(log(n))
+Naive Contains                      O(n)
+Contains Check (with hash table)    O(1)
+
+IMPLEMENTATION
+* PriorityQueue -> java.util.*

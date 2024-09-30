@@ -7,7 +7,7 @@ Big O notation give the upper bound worst complexity for the Algo.
 
 Constant time - O(1)
 Linear Time - O(n)
-Quadratic time - O(n^2)
+Quadratic time - O(n^2)...O(n^3)
 Logarithmic time -  O(log n)
 	log base 2 applies. However, since Big O notation only concerns
     itself with the shape of the performance, the actual base doesn’t matter.

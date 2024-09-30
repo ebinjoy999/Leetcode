@@ -91,6 +91,9 @@ Only visits the current node after the left and right child have been visited re
 ---------------Binary Search Trees
 A binary search tree, or BST, is a data structure that facilitates fast lookup, insert, and removal operations.
 
+A complete binary tree is a tree in which at every level, except possibly the last is
+completely filled and and all the nodes are as far left as possible.
+
 Every time the search algorithm visits a node in the BST, it can safely make these two assumptions:
 If the search value is less than the current value, it must be in the left subtree.
 If the search value is greater than the current value, it must be in the right subtree.

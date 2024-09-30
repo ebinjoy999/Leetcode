@@ -102,4 +102,5 @@ class StackQueue<T : Any> : Queue<T> {
 }
 
 
-
+IMPLEMENTATION
+* LinkedList -> java.util.LinkedList -> which is a doubly linked list

@@ -12,8 +12,12 @@ override fun pop(): T? {
     }
     return storage.removeAt(storage.size - 1)
 }
-
+isEmpty()
 
 
 
 You may have wondered if you could adopt the Kotlin collection interfaces for the stack. A stack’s purpose is to limit the number of ways to access your data, and adopting interfaces such as Iterable would go against this goal by exposing all of the elements via iterators.
+
+
+IMPLEMENTATION
+* LinkedList -> java.util.LinkedList -> which is a doubly linked list

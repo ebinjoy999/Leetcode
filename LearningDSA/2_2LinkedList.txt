@@ -26,6 +26,9 @@ Reference take 8bit 64arch while 4 in 32arch
 2. append : Adds a value at the end of the list.
 3. insert : Adds a value after a particular node of the list.
 
+Singly linked list has head
+while doubly liked list has head and tail pointers
+
 class LinkedList<T : Any> {
     private var head: Node<T>? = null
     private var tail: Node<T>? = null
