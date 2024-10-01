@@ -1,0 +1,34 @@
+
+Union Find is a data structure that keeps track of elements which are split into one or more disjoint sets.
+Its has two primary operations:
+find and union.
+
+Applications
+*Kruskal's minimum spanning
+*tree algorithm
+*Grid percolation
+*Network connectivity
+*Least common ancestor in trees
+*Image processing
+
+
+Construction	    O(n)
+Union	            α(n)
+Find	            α(n)
+Get component size	α(n)
+Check if connected	α(n)
+Count components	O(1)
+ Amortized constant time α(n); average time complexity per operation over a sequence of operations is constant
+
+
+Kruskal's minimum spanning
+Given a graph G = (V,E) we want to find a Minimum Spanning Tree(subset of edges which connect all vertices at min cost) in the graph (it may not be unique).
+
+1) Sort edges by ascending edge weight.
+2) Process sorted edges and look at the two nodes the edge belongs to, if the nodes are already unified we don’t include this edge, otherwise we include it and unify he nodes.
+3) The algorithm terminates when every edge has been processed or all the vertices have been unified.
+
+Once we repeat above steps we will get 9Union_start.png ---
+Now we need to merge/union groups/colors together, that will DtoE, merge purple and green thats union merge/find.
+Finally we will get 9Union_final.png
+:The underline DS that allows is Union Find
