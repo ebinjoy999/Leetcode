@@ -73,20 +73,65 @@ class BinaryNode<T: Any>(var value: T) {
 	var rightChild: BinaryNode<T>? = null
 }
 
+            A
+          /   \
+        B       C
+       / \     /  \
+      D   E   F    G
 
 --In-order traversal
 If the current node has a left child, recursively visit this child first.
 Then visit the node itself.
 If the current node has a right child, recursively visit this child.
+D, B, E, A, F, C, G
 
 --Pre-order traversal
 Visits the current node first.
 Recursively visits the left and right child.
+ A, B, D, E, C, F, G 
 
 --Post-order traversal
 Recursively visits the left and right child.
 Only visits the current node after the left and right child have been visited recursively.
+D, E, B, F, G, C, A
 
+--Level Order Traversal (BFS)
+A, B, C, D, E, F, G
+
+https://github.com/williamfiset/DEPRECATED-data-structures/blob/master/com/williamfiset/datastructures/binarysearchtree/BinarySearchTree.java
+* CHECK remove case
+* CHECK 4 type traversal by-return java.util.Iterator<T> 
+
+            Eg:   
+
+            private java.util.Iterator<T> preOrderTraversal() {
+
+                final int expectedNodeCount = nodeCount;
+                final java.util.Stack<Node> stack = new java.util.Stack<>();
+                stack.push(root);
+
+                return new java.util.Iterator<T>() {
+                  @Override
+                  public boolean hasNext() {
+                    if (expectedNodeCount != nodeCount) throw new java.util.ConcurrentModificationException();
+                    return root != null && !stack.isEmpty();
+                  }
+
+                  @Override
+                  public T next() {
+                    if (expectedNodeCount != nodeCount) throw new java.util.ConcurrentModificationException();
+                    Node node = stack.pop();
+                    if (node.right != null) stack.push(node.right);
+                    if (node.left != null) stack.push(node.left);
+                    return node.data;
+                  }
+
+                  @Override
+                  public void remove() {
+                    throw new UnsupportedOperationException();
+                  }
+                };
+              }
 
 ---------------Binary Search Trees
 A binary search tree, or BST, is a data structure that facilitates fast lookup, insert, and removal operations.
@@ -117,6 +162,14 @@ private fun insert(
     return node
 }
 
+BST operations
+Operation   Average    Worst
+Insert     O(log(n))   O(n)
+Delete     O(log(n))   O(n)
+Remove     O(log(n))   O(n)
+Search     O(log(n))   O(n)
+
+O(n) is worst case so we using balanced BT
 
 -----------------AVL Trees
 
@@ -265,4 +318,4 @@ Root
 (End of word "cat")
 
 
-
+A subtree is a tree entirely contained withinanother. They are usually denoted using triangles.
