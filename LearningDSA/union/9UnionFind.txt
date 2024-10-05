@@ -32,3 +32,43 @@ Once we repeat above steps we will get 9Union_start.png ---
 Now we need to merge/union groups/colors together, that will DtoE, merge purple and green thats union merge/find.
 Finally we will get 9Union_final.png
 :The underline DS that allows is Union Find
+ 
+
+---------- Union Find
+To begin using Union Find, first construct a bijection (a mapping; HashTable) between your objects and the integers in the range [0, n).
+
+Smaller component will merge to larger one
+
+Find Operation -  Determine the root or representative of the set that an element belongs to.
+To find which component a particular element belongs to find the root of that component by following the parent nodes until a self loop is reached (a node who's parent is itself)
+
+Union Operation - Connect two elements, indicating they are in the same set.
+To unify two elements find which are the root nodes of each component and if the root nodes are different make one of the root nodes be the parent of the other.
+
+
+---------- Union Find with path compression
+
+Path Compression: During the find operation, we can speed things up by making nodes point directly to the root, which flattens the structure of the tree and speeds up future operations.
+
+Source  code - https://github.com/williamfiset/DEPRECATED-data-structures/blob/master/com/williamfiset/datastructures/unionfind/UnionFind.java 
+
+EXAMPLE ----
+1 - 2   3 - 4   5
+Union(2, 3) → Connect the sets containing 1 and 3 (since 1 is connected to 2, and 3 is connected to 4), so now 1, 2, 3, and 4 are all in the same set with 1 as the root.
+
+1 - 2
+    |
+3 - 4   5
+
+
+Now, let's perform some find operations:
+Find(2) → The root of 2 is 1 (we follow the path from 2 → 1).
+Find(4) → The root of 4 is 1 (we follow the path from 4 → 3 → 1).
+
+Path Compression: After performing find(4), we can update the structure to make the tree flatter by pointing 4 directly to the root (1), so the next find operations will be faster:
+
+  1
+ /|\
+2 3 4   5
+
+----
