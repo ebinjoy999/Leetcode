@@ -1,0 +1,48 @@
+A Hash table (HT) is a data structure that provides a mapping from keys to values using a technique called hashing.
+
+The key needs to be hashable.
+A hash function H(x) is a function that maps a key ‘x’ to a whole number in a fixed range.
+
+If H(x) = H(y) then objects x and y
+might be equal, but if H(x) # H(y)
+then x and y are certainly not equal.
+
+
+NOTE: Hash functions for files are more sophisticated than those used for hashtables. Instead for files we use what are called cryptographic hash functions also called checksums.
+
+Hash collition: Two object x and y has same hash value. 
+A: Since we are going to use hash functions in the implementation of our hash table we need our hash functions to be deterministic. To enforce this behaviour, we demand that the keys used in our hash table are immutable.
+
+For faster access of hashtable the hash function should be const time O(1).
+
+https://github.com/williamfiset/DEPRECATED-data-structures/blob/master/com/williamfiset/datastructures/hashtable/HashTableSeparateChaining.java
+
+------------Avoiding Hash collitions
+****Separate chaining:
+Deals with hash collisions by maintaining a data structure (usually a
+linked list) to hold all the different values which hashed to a particular value.
+
+****Open addressing: 
+Deals with hash collisions by finding another place within the hash table for the object to go by offsetting it from the position to which it hashed to.
+	Load factor = item in table/tablel total size
+
+The 0(1) constant time behaviour attributed to hash tables assumes the load factor (α) is
+kept below a certain fixed value. This means once α > threshold we need to grow the table size (ideally exponentially, e.g double). Hash_complexity.png
+
+If the position our key hashed to is occupied we try another position in the hash table by
+offsetting the current position subject to a probing sequence P(x). We keep doing this until an unoccupied slot is found.
+
+There are an infinite amount of probing sequences you can come up with, here are a few:
+--Linear probing:
+P(x) = ax + b where a, b are constants
+--Quadratic probing:
+P(x)= ax² + bx + c, where a,b,c are constants
+--Double hashing:
+P(k,x) = x*H₂(k), where H₂:(k) is a
+
+secondary hash function
+--Pseudo random number generator:
+P(k,x) = x*RNG(H(k),x), where RNG is a random
+number generator function seeded with H(k).
+
+*******From 4:47 to 5:45 ****
