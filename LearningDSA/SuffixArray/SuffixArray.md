@@ -24,7 +24,7 @@ The actual ‘suffix array’ is the array of sorted indices. Because in INDICES
 The suffix array provides a space efficient alternative to a suffix tree which itself is a compressed version of a trie.
 NOTE: suffix arrays can do everything suffix trees can, with some additional information such as a Longest Common Prefix (LCP) array.
 
-# Longest Common Prefix (LCP) --------
+# Longest Common Prefix (LCP) ----------------
 
 LCP value: The LCP value at index  i is the length of the longest common prefix between the suffix at index i and the suffix at index i-1 in sorted array.
 
@@ -43,25 +43,25 @@ By convention, LCP[0] is undefined, but for most purposes it’s fine to set it 
 
 NOTE: There exists many methods for efficiently constructing the LCP array in 0(nlog(n)) and O(n)..Linear.
 
-# Finding Unique substring --------
+# Finding Unique substring ----------------
 
 The naive algorithm generates all substrings and places them in a set resulting in a 0(n^2) algorithm.
 A better approach is to use the LCP array. This provides not only a quick but also a space efficient solution.
 
-(1.png)
+<img src="1.png" width="50%">
 String "AZAZA" has n(n+1)/2 = 15 substrings
 Calculating its LCP
 
 LCP Array: The LCP array tells you how many characters each suffix shares with the previous one. By summing up the LCP values, you effectively count how many substrings overlap between consecutive suffixes.
 
-(2.png)
+<img src="2.png" width="50%">
 The overlaps represent non-unique substrings, so subtracting the total of LCP values from the total substrings gives the number of unique substrings.
 
 
 https://github.com/williamfiset/DEPRECATED-data-structures/tree/master/com/williamfiset/datastructures/suffixarray 
 
 
-# [K common substring]/[Longest common substring] problem ----
+# [K common substring]/[Longest common substring] problem ------------
 
 Suppose we have n strings, how do we find the longest common substring that appears in at least 2 <= K <= n of the strings?
 
@@ -71,12 +71,42 @@ S1 = 'a***bca***'
 s2 = '***bca***d'
 S3 = 'daca'
 
-'bca' is logest common substring
+`'bca' is logest common substring:` The LCS is not be unique there can be mutliple
 
+One approach is to use dynamic programming running in O(n<sub>i</sub> * n<sub>2</sub> * n<sub>3</sub> * .. * n<sub>m</sub>), where n<sub>i</sub> is the length of the string S<sub>i</sub>. This may be ok for a few small strings, but rapidly gets unwieldy.
 
+An alternative method is to use a suffix array which can find the solution in O(n<sub>i</sub> + n<sub>2</sub> + n<sub>3</sub> * .. * n<sub>m</sub>) time
 
+```
+Dynamic Programming (DP) is a problem-solving technique used in computer science to efficiently solve problems 
+that can be broken down into smaller, overlapping subproblems. It's often used when a brute-force approach
+would be too inefficient due to the exponential growth of the number of subproblems.
+```
 
+Consider again:
+S1 = abca, S2 = bcad, S3 = daca
 
+To find the LCS first create a new larger string T which is the concatenation of all the strings Si separated by unique sentinels.
+T= S1+ # +S2 + ‘$" + S3+ ‘%’ = abca#bcad$daca%
+
+Now create suffix array in linear time
+```
+0 #bcad$daca%s
+0 $daca%
+0 %
+0 a#bcad$daca%s
+1 a%
+1 abca#bcad$daca%
+1 aca%
+1 ad$daca%
+0 bca#bcad$daca%
+3 bcad$daca%
+0 ca#bcad$daca%
+2 ca%
+2 cad$daca%
+0 d$daca%
+1 daca%
+```
 
 
 
