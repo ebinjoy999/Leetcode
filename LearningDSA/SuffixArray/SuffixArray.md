@@ -45,6 +45,47 @@ By convention, LCP[0] is undefined, but for most purposes it’s fine to set it 
 
 NOTE: There exists many methods for efficiently constructing the LCP array in 0(nlog(n)) and O(n)..Linear.
 
+### Example
+In the context of a suffix array, the Longest Common Prefix (LCP) refers to the length of the longest common prefix between consecutive suffixes in the lexicographically sorted list of all suffixes of a given string.
+
+Key concepts:
+Suffix Array: A suffix array is an array of integers providing the starting positions of all suffixes of a given string, sorted in lexicographical order.
+
+LCP Array: The LCP array is an array of integers where each entry represents the length of the longest common prefix between the current suffix and the previous one in the sorted suffix array.
+
+Example:
+Consider the string "banana":
+
+Suffixes:
+```
+"banana" (index 0)
+"anana" (index 1)
+"nana" (index 2)
+"ana" (index 3)
+"na" (index 4)
+"a" (index 5)
+```
+
+Suffix Array (sorted by lexicographical order):
+```
+"a" (index 5)
+"ana" (index 3)
+"anana" (index 1)
+"banana" (index 0)
+"na" (index 4)
+"nana" (index 2)
+```
+LCP Array:
+LCP between "a" and "ana" = 1 (common prefix: "a")
+LCP between "ana" and "anana" = 3 (common prefix: "ana")
+LCP between "anana" and "banana" = 0 (no common prefix)
+LCP between "banana" and "na" = 0 (no common prefix)
+LCP between "na" and "nana" = 2 (common prefix: "na")
+Thus, the LCP Array for the string "banana" is:LCP=[0,1,3,0,0,2]
+```
+Each entry in the LCP array tells us the length of the longest common prefix between consecutive suffixes in the suffix array. The first entry is typically 0 because there is no previous suffix to compare.
+```
+
 # Finding Unique substring ----------------
 
 The naive algorithm generates all substrings and places them in a set resulting in a 0(n^2) algorithm.
@@ -110,44 +151,42 @@ Now create suffix array in linear time
 1 daca%
 ```
 
-### Example
-In the context of a suffix array, the Longest Common Prefix (LCP) refers to the length of the longest common prefix between consecutive suffixes in the lexicographically sorted list of all suffixes of a given string.
+Remember that we need one string of each colour and the maximum LCP between them
+LCS Algorithm Things can get more messy when suffixes of different colours are not exactly adjacent.
 
-Key concepts:
-Suffix Array: A suffix array is an array of integers providing the starting positions of all suffixes of a given string, sorted in lexicographical order.
+Use a sliding window to capture the correct amount of suffix colours. At each step advance the bottom endpoint or adjust the top endpoint such that the window contains exactly K suffixes of different colours.
+<img src="3.png" width="60%">
 
-LCP Array: The LCP array is an array of integers where each entry represents the length of the longest common prefix between the current suffix and the previous one in the sorted suffix array.
+LCS Algorithm For each valid window perform a range query on the LCP array between the bottom and top
+endpoints. The LCS will be the maximum LCP value for all possible windows.
 
-Example:
-Consider the string "banana":
+<img src="4.png" width="50%">
+Suppose if k=2, thats The maximum prefix that can be get from any any two different coloured suffix.
 
-Suffixes:
-```
-"banana" (index 0)
-"anana" (index 1)
-"nana" (index 2)
-"ana" (index 3)
-"na" (index 4)
-"a" (index 5)
-```
+<img src="5.png" width="50%">
+The LCP between all strings in the window is 2, which is the minimum value in window.
 
-Suffix Array (sorted by lexicographical order):
-```
-"a" (index 5)
-"ana" (index 3)
-"anana" (index 1)
-"banana" (index 0)
-"na" (index 4)
-"nana" (index 2)
-```
-LCP Array:
-LCP between "a" and "ana" = 1 (common prefix: "a")
-LCP between "ana" and "anana" = 3 (common prefix: "ana")
-LCP between "anana" and "banana" = 0 (no common prefix)
-LCP between "banana" and "na" = 0 (no common prefix)
-LCP between "na" and "nana" = 2 (common prefix: "na")
-Thus, the LCP Array for the string "banana" is:LCP=[0,1,3,0,0,2]
-```
-Each entry in the LCP array tells us the length of the longest common prefix between consecutive suffixes in the suffix array. The first entry is typically 0 because there is no previous suffix to compare.
-```
+Lucky for us, the minimum sliding range query problem can be solved in a total of O(n) time for all windows!
+Alternatively, you can use min range query DS such as a segment tree to perform queries in log(n) time which may be easier but slightly slower running for a total of O(nlog(n))
+
+
+Additionally, we will need a DS (hashtable) to track the colours in our sliding window.
+
+
+
+# Longest Repeated Substring
+
+The brute force method requires 0(n^2) time and lots of space. Using the information inside the LCP array saves you time and space.
+
+We have 4 strings, need to find in atleast two strings(k=2)
+T = AABC#BCDC$BCDE%CDED&
+
+<img src="6.png" width="70%">
+Look at the varables: Window LCP, Window LCS, LCS Length, LCS
+During the step reduce window size from top and if not meet k expand to bottom.
+
+
+Find the LRS of the string: ‘ABRACADABRA’?
+
+
 

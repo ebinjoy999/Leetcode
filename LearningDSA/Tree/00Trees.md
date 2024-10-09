@@ -1,20 +1,25 @@
 
-
+# Tree Class
+```
 class TreeNode<T>(val value: T) {
 	private val children: MutableList<TreeNode<T>> = mutableListOf()
 }
+```
 
 
 
---DFS
+### DFS
+```
 fun forEachDepthFirst(visit: Visitor<T>) {
     visit(this)
     children.forEach {
         it.forEachDepthFirst(visit)
     }
 }
+```
 
---Level-order traversal
+### Level-order traversal
+```
 fun forEachLevelOrder(visit: Visitor<T>) {
     visit(this)
     val queue = Queue<TreeNode<T>>()
@@ -26,8 +31,10 @@ fun forEachLevelOrder(visit: Visitor<T>) {
         node = queue.dequeue()
     }
 }
+```
 
---Create tree
+### create tree
+```
 fun makeBeverageTree(): TreeNode<String> {
     val tree = TreeNode("Beverages")
     
@@ -62,16 +69,18 @@ fun makeBeverageTree(): TreeNode<String> {
     soda.add(bitterLemon)
     return tree
 }
+```
 
+# Binary Trees
 
------------- Binary Trees
-
+```
 typealias Visitor<T> = (T) -> Unit
 
 class BinaryNode<T: Any>(var value: T) {
 	var leftChild: BinaryNode<T>? = null
 	var rightChild: BinaryNode<T>? = null
 }
+```
 
             A
           /   \
@@ -79,29 +88,29 @@ class BinaryNode<T: Any>(var value: T) {
        / \     /  \
       D   E   F    G
 
---In-order traversal
+### In-order traversal
 If the current node has a left child, recursively visit this child first.
 Then visit the node itself.
 If the current node has a right child, recursively visit this child.
 D, B, E, A, F, C, G
 
---Pre-order traversal
+### Pre-order traversal
 Visits the current node first.
 Recursively visits the left and right child.
  A, B, D, E, C, F, G 
 
---Post-order traversal
+### Post-order traversal
 Recursively visits the left and right child.
 Only visits the current node after the left and right child have been visited recursively.
 D, E, B, F, G, C, A
 
---Level Order Traversal (BFS)
+### Level Order Traversal (BFS)
 A, B, C, D, E, F, G
 
 https://github.com/williamfiset/DEPRECATED-data-structures/blob/master/com/williamfiset/datastructures/binarysearchtree/BinarySearchTree.java
 * CHECK remove case
 * CHECK 4 type traversal by-return java.util.Iterator<T> 
-
+```
             Eg:   
 
             private java.util.Iterator<T> preOrderTraversal() {
@@ -132,8 +141,9 @@ https://github.com/williamfiset/DEPRECATED-data-structures/blob/master/com/willi
                   }
                 };
               }
+```
 
----------------Binary Search Trees
+# Binary Search Trees
 A binary search tree, or BST, is a data structure that facilitates fast lookup, insert, and removal operations.
 
 A complete binary tree is a tree in which at every level, except possibly the last is
@@ -144,7 +154,7 @@ If the search value is less than the current value, it must be in the left subtr
 If the search value is greater than the current value, it must be in the right subtree.
 
 By leveraging the rules of the BST, you can avoid unnecessary checks and cut the search space in half every time you make a decision. That’s why element lookup in a BST is an O(log n) operation.
-
+```
 fun insert(value: T) {
     root = insert(root, value)
 }
@@ -161,47 +171,61 @@ private fun insert(
     }
     return node
 }
-
+```
 BST operations
+```
 Operation   Average    Worst
 Insert     O(log(n))   O(n)
 Delete     O(log(n))   O(n)
 Remove     O(log(n))   O(n)
 Search     O(log(n))   O(n)
-
+```
 O(n) is worst case so we using balanced BT
 
------------------AVL Trees
+# Balanced Binary Search Tree (BBST)
+
+A Balanced Binary Search Tree (BBST) is a self-balancing binary search tree.
+This type of tree will adjust itself in order to maintain a low (logarithmic) height allowing for faster operations such as insertions and deletions.
+
+In binary tree if nodes are in a linear fasion the compexity will O(n), so we have balance.
+
+In some BBST implementations where you often need to access the parent/uncle nodes (such as RB trees), it’s convenient for nodes to not only have a reference to the left and the right child nodes but also the parent node. This can complicate tree rotations because instead of updating three pointers, now you have to update six!
+
+https://github.com/williamfiset/DEPRECATED-data-structures/tree/master/com/williamfiset/datastructures/balancedtree
+
+# AVL Trees
 
 
 Balance of a binary search tree can impact performance and implement the AVL tree from scratch.
 
---Perfect balance: every level of the tree is filled with nodes from top to bottom.
---“Good-enough” balance: balanced tree must have all its levels filled, except for
+#1 Perfect balance: every level of the tree is filled with nodes from top to bottom.
+#2 “Good-enough” balance: balanced tree must have all its levels filled, except for
 the bottom one.
---Unbalanced: trees in this state suffer from various levels of performance loss depending on the degree of imbalance.
+#3 Unbalanced: trees in this state suffer from various levels of performance loss depending on the degree of imbalance.
 
 Balance Factor (BF) = Height(Left Subtree) - Height(Right Subtree)
 
 
-Unbalanced Node Conditions
+### Unbalanced Node Conditions
 Left-heavy: A node with a balance factor greater than 1 is left-heavy.
 Right-heavy: A node with a balance factor less than -1 is right-heavy.
 
 
 If a node becomes unbalanced after an insertion or deletion, the AVL tree must be rebalanced to maintain its properties. Rebalancing typically involves performing rotations (left or right rotations) 
 
+```
 *left rotation 
 *left-right rotation
 *right rotation
 *right-left rotation.
 
-
-----Left Rotation
+```
+## Left Rotation
 ChatGPT
 In an AVL tree, a left rotation is performed when a node becomes imbalanced due to an insertion in the right subtree, causing the balance factor to go out of range (i.e., becoming -2). This rotation helps to restore balance by rotating nodes in such a way that the height difference between the left and right subtrees becomes 1 or 0.
 
 Before Rotation
+```
 		  X
 		/  \
 	   A    Y
@@ -210,14 +234,16 @@ Before Rotation
 		  	 / \
 		  	C   D 	
 
+```
 After rotation		  	
-
+```
       Y
      / \
    X     Z
   / \   / \
  A  B  C   D
 
+```
 
 --Left rotation
 1)The right child is chosen as the pivot. This node replaces the rotated node as the root of the subtree (it moves up a level).
@@ -228,7 +254,7 @@ In the generic example shown in the earlier image, this is node b. Because b is 
 4)You update the heights of the rotated node and the pivot.
 5)Finally, you return the pivot so that it can replace the rotated node in the tree.
 
-
+```
 private fun leftRotate(node: AVLNode<T>): AVLNode<T> {
 	val pivot = node.rightChild!!
 	node.rightChild = pivot.leftChild
@@ -237,10 +263,11 @@ private fun leftRotate(node: AVLNode<T>): AVLNode<T> {
 	pivot.height = max(pivot.leftHeight, pivot.rightHeight) + 1
 	return pivot
 }
+```
 
-----Right Rotation
+## Right Rotation
 A right rotation is performed when a node becomes imbalanced with a left-heavy subtree (balance factor becomes +2). The goal is to move the left child up and rotate the subtree to the right to restore balance.
-
+```
 private fun rightRotate(): AVLNode<T>{
 	val pivotal = node.leftChild!!
 	node.leftChild = pivotal.rightChild
@@ -249,8 +276,8 @@ private fun rightRotate(): AVLNode<T>{
 	pivot.height = max(pivot.leftHeight, pivot.rightHeight) + 1
 	return pivot
 }
-
----Right-left rotation
+```
+## Right-left rotation
 
 An RL rotation is a double rotation that combines a right rotation on the right child followed by a left rotation on the root. It is needed when the tree becomes right-left heavy, meaning the right child of the root is left-heavy.
 
@@ -265,6 +292,7 @@ An RL rotation is a double rotation that combines a right rotation on the right 
     z   y
 
 --- Balance
+```
 private fun balanced(node: AVLNode<T>): AVLNode<T> {
     return when (node.balanceFactor) {
         2 -> { 			//left heavier
@@ -285,8 +313,10 @@ private fun balanced(node: AVLNode<T>): AVLNode<T> {
         else -> node
     }
 }
+```
 
 --Insert
+```
 private fun insert(node: AVLNode<T>?, value: T): AVLNode<T>? {
     node ?: return AVLNode(value)
     if (value < node.value) {
@@ -300,9 +330,9 @@ private fun insert(node: AVLNode<T>?, value: T): AVLNode<T>? {
     return balancedNode
 }
 
+```
 
-
------------------------ Tries (try)
+# Tries (try)
 
 Tries are a type of tree data structure that are optimized for efficient string searching. They are often referred to as prefix trees or radix trees.
 
