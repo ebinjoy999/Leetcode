@@ -25,7 +25,9 @@ The suffix array provides a space efficient alternative to a suffix tree which i
 NOTE: suffix arrays can do everything suffix trees can, with some additional information such as a Longest Common Prefix (LCP) array.
 
 # Longest Common Prefix (LCP) ----------------
-
+```
+A prefix generally refers to a sequence of characters or elements that appears at the beginning of a string or a structure
+```
 LCP value: The LCP value at index  i is the length of the longest common prefix between the suffix at index i and the suffix at index i-1 in sorted array.
 
 ```
@@ -86,7 +88,7 @@ would be too inefficient due to the exponential growth of the number of subprobl
 Consider again:
 S1 = abca, S2 = bcad, S3 = daca
 
-To find the LCS first create a new larger string T which is the concatenation of all the strings Si separated by unique sentinels.
+To find the LCS first create a new larger string T which is the concatenation of all the strings Si separated by unique sentinels(this symbols ascci should be less than alphabets).
 T= S1+ # +S2 + ‘$" + S3+ ‘%’ = abca#bcad$daca%
 
 Now create suffix array in linear time
@@ -108,7 +110,44 @@ Now create suffix array in linear time
 1 daca%
 ```
 
+### Example
+In the context of a suffix array, the Longest Common Prefix (LCP) refers to the length of the longest common prefix between consecutive suffixes in the lexicographically sorted list of all suffixes of a given string.
 
+Key concepts:
+Suffix Array: A suffix array is an array of integers providing the starting positions of all suffixes of a given string, sorted in lexicographical order.
 
+LCP Array: The LCP array is an array of integers where each entry represents the length of the longest common prefix between the current suffix and the previous one in the sorted suffix array.
 
+Example:
+Consider the string "banana":
+
+Suffixes:
+```
+"banana" (index 0)
+"anana" (index 1)
+"nana" (index 2)
+"ana" (index 3)
+"na" (index 4)
+"a" (index 5)
+```
+
+Suffix Array (sorted by lexicographical order):
+```
+"a" (index 5)
+"ana" (index 3)
+"anana" (index 1)
+"banana" (index 0)
+"na" (index 4)
+"nana" (index 2)
+```
+LCP Array:
+LCP between "a" and "ana" = 1 (common prefix: "a")
+LCP between "ana" and "anana" = 3 (common prefix: "ana")
+LCP between "anana" and "banana" = 0 (no common prefix)
+LCP between "banana" and "na" = 0 (no common prefix)
+LCP between "na" and "nana" = 2 (common prefix: "na")
+Thus, the LCP Array for the string "banana" is:LCP=[0,1,3,0,0,2]
+```
+Each entry in the LCP array tells us the length of the longest common prefix between consecutive suffixes in the suffix array. The first entry is typically 0 because there is no previous suffix to compare.
+```
 
