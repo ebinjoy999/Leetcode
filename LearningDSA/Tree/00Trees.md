@@ -193,6 +193,19 @@ In some BBST implementations where you often need to access the parent/uncle nod
 
 https://github.com/williamfiset/DEPRECATED-data-structures/tree/master/com/williamfiset/datastructures/balancedtree
 
+All AVL trees are balanced binary search trees, but not all balanced binary search trees are AVL trees. The AVL tree is just one specific way of balancing a BST, with strict rules on the height difference between subtrees.
+n an AVL tree, the height difference between the left and right subtrees of any node is always within -1, 0, or 1.
+
+Non AVL Balance Search tree
+
+         10
+        /  \
+       5   20
+          /  \
+        15    30
+
+
+
 # AVL Trees
 
 
