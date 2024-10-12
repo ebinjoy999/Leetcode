@@ -5,35 +5,35 @@ The vowels are 'a', 'e', 'i', 'o', and 'u', and they can appear in both lower an
 
 
 class Solution {
-	fun reverseVowels(s: String): String {
-		val c = s.toCharArray()
-		val vowels = listOf('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U')
-		var (i, j) = 0 to c.size-1
-		while ( i < j) {
-			if (i < c.size && vowels.contains(c[i])) {
-				while (j > -1 && !vowels.contains(c[j])) {
-					j--
-				}
-				val x = c[j]
-				c[j] = c[i]
-				c[i] = x
-			} else if (j > -1 &&vowels.contains(c[j])) {
-				while (i < c.size && !vowels.contains(c[i])) {
-					i++
-				}
-				val x = c[j]
-				c[j] = c[i]
-				c[i] = x
-			}
-			i++
-			j--
-		}
-		return c.joinToString("")
-	}
+    fun reverseVowels(s: String): String {
+        
+        var (i, j) = 0 to s.length - 1
+        val vowels = setOf('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U')
+        val sChars = s.toCharArray()
+
+        while (i < j) {
+            if (vowels.contains(sChars[i]) && vowels.contains(sChars[j])) {
+                val temp = sChars[j]
+                sChars[j] = sChars[i]
+                sChars[i] = temp
+                i++
+                j--
+            } else if (vowels.contains(sChars[i])) {
+                    j--
+             } else if (vowels.contains(sChars[j])) {
+                    i++
+             } else {
+                 i++
+                j--
+             }
+        }
+        return sChars.joinToString("")
+
+    }
 }
 
 
----------------
+--------------- Twom Pointer
 
 class Solution {
     fun reverseVowels(s: String) = with(s.filter { it.isVowel }.reversed()) {
