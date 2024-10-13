@@ -1,4 +1,4 @@
-https://leetcode.com/problems/is-subsequence/d
+https://leetcode.com/problems/is-subsequence/
 
 
 Given two strings s and t, return true if s is a subsequence of t, or false otherwise.

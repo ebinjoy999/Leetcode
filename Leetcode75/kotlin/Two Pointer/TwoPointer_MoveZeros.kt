@@ -23,3 +23,31 @@ class Solution {
         }
     }
 }
+
+
+// Two pointer solution
+
+class Solution {
+    fun moveZeroes(nums: IntArray): Unit {
+        
+        var (i, j) = 0 to 0
+        fun loopForNext(){
+            while(i < nums.size && nums[i] != 0) {
+                i++
+            }
+            while(j < nums.size && nums[j] == 0 || j<i) {
+                j++
+            }
+        }
+        
+        loopForNext()
+        if(i < j)
+            while(i < nums.size && j < nums.size) {
+                val temp = nums[i]
+                nums[i] = nums[j]
+                nums[j] = temp
+                loopForNext()
+            }
+    }
+    
+}
