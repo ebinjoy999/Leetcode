@@ -1,0 +1,16 @@
+
+val list = ArrayList<Boolean>(candies.size)
+
+val prefixSum = IntArray(nums.size)
+
+val vowels = setOf('a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U')
+vowels.contains(sChars[i])
+
+val queue: LinkedList<Pair<TreeNode?, Int>> = LinkedList()
+	queue.add(Pair(tRoot, depth))
+	queue.peek() != null
+	queue.pop()
+
+
+
+  val provinces = arrayListOf<Set<Int>>()
