@@ -1,3 +1,13 @@
+https://leetcode.com/problems/group-anagrams/ 
+https://leetcode.com/problems/valid-anagram
+
+https://leetcode.com/problems/find-all-anagrams-in-a-string/
+
+
+
+https://leetcode.com/problems/group-anagrams/solutions/5915231/298-ms-beats-93-10-kotlin/
+
+
 
 val list = ArrayList<Boolean>(candies.size)
 
