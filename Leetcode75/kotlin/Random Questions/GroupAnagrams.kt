@@ -14,18 +14,17 @@ class Solution {
 
             val ar = str.toCharArray()
             ar.sort()
-            val key = String(ar).  //val key = ar.joinToString()
+            val key = ar.joinToString()
+
             if (!hash.contains(key)) {
                 hash[key] = arrayListOf()
             } 
-
-            val items = hash[key]!!
-            items.add(str)
-            hash[key] = items
+            hash[key] = hash[key]!!.apply {  add(str) }
         }
         return ArrayList(hash.values)
     }
 }
+
 
 
 
