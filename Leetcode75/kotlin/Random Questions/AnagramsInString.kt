@@ -3,6 +3,11 @@ https://leetcode.com/problems/find-all-anagrams-in-a-string/description/
 Given two strings s and p, return an array of all the start indices of p's 
 anagrams in s. You may return the answer in any order.
 
+
+Input: s = "cbaebabacd", p = "abc"
+Output: [0,6]
+
+
 ------------ 8 ms Beats 100.00%
 
 class Solution {

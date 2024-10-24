@@ -19,7 +19,7 @@ class Solution {
             if (!hash.contains(key)) {
                 hash[key] = arrayListOf()
             } 
-            hash[key] = hash[key]!!.apply {  add(str) }
+            hash[key]!!.apply {  add(str) }
         }
         return ArrayList(hash.values)
     }

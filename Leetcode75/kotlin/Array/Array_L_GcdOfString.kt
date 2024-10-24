@@ -24,3 +24,13 @@ class Solution {
 
 Input: str1 = "ABABAB", str2 = "ABAB"
 Output: "AB"
+
+
+
+ // Count gcd of string lengths
+        var l1 = str1.length
+        var l2 = str2.length
+        while (l1 != l2) {
+            if (l1 > l2) l1 -= l2
+            else l2 -= l1
+        }
